@@ -2,7 +2,7 @@
 application:
   author: Georges WAKEU
   title: Register service
-  version: 0.0.1
+  version: 1.0.0
 
 eureka:
   client:
@@ -10,7 +10,8 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-
+  instance:
+    prefer-ip-address: true
 logging:
   level:
     com:
