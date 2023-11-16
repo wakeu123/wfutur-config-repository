@@ -1,0 +1,28 @@
+eureka:
+  instance:
+    hostname: localhost
+
+gateway:
+  host: ${eureka.instance.hostname}
+  port: 9000
+  protocol: http
+
+# KEYCLOAK
+oauth2:
+  base:
+    url: http://${eureka.instance.hostname}:8080
+
+keycloak:
+  enabled: true
+  realm: WFuturRealm
+  resource: wfutur
+  credentiels:
+    secret: V4ACf3ONVXF4kUA22hHvCHo8fp9xDlx0
+  auth-server-url: ${oauth2.base.url}/auth
+  always-refresh-token: true
+  cors: true
+  cors-max-age: 0
+  cors-allowed-methods: '*'
+  cors-allowed-headers: '*'
+  cors-exposed-headers: '*'
+  principal-attribute: preferred_username

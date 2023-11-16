@@ -1,0 +1,45 @@
+# Application config
+application:
+  author: Georges WAKEU
+  title: Student service
+  version: 1.0.0
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka
+
+logging:
+  level:
+    com:
+      netflix: ERROR
+
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: student-service
+          uri: lb://student-service
+          predicates:
+            - Path=/students/**
+        - id: category-service
+          uri: lb://category-service
+          predicates:
+            - Path=/categories/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${eureka.instance.hostname}:8080/realms/wfutur
+
+
+server:
+  port: ${gateway.port}
