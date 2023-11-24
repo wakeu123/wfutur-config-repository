@@ -32,3 +32,6 @@ spring:
     console:
       enabled: true
 
+logging:
+  level:
+    com.axion.wfutur.categoryservice.ontrollers: DEBUG
