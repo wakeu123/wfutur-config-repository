@@ -34,4 +34,4 @@ spring:
 
 logging:
   level:
-    com.axion.wfutur.categoryservice.ontrollers: DEBUG
+    com.axion.wfutur.controllers: DEBUG
