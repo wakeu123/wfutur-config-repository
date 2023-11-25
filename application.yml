@@ -1,24 +1,65 @@
-eureka:
-  instance:
-    hostname: localhost
+# APPLICATION
+info:
+  name: ${spring.application.name}
+  version: ${version}
+
+wfutur:
+  date:
+    formats: dd/MM/yyyy,dd-MM-yyyy,dd.MM.yyyy,dd/MM/yy,dd-MM-yy,dd.MM.yy,dd/M/yy,dd/M/yyyy,dd/M yyyy,dd/M -yy,dd/M yy,dd-M-yy,dd.M.yyyy,dd.M.yy,dd. M. yy,dd/MM/yy,dd-MM-yy,dd.MM.yy,MM/dd/yyyy,MM-dd-yyyy,M/dd/yyyy,M/dd/yy,M-dd-yy,yyyy/MM/dd,yyyy-MM-dd,yyyyMMdd,yy/MM/dd,yy-MM-dd,yy MM dd
+  protocol: https
+  language: en
+  languages: en,fr
+
 
 gateway:
-  host: ${eureka.instance.hostname}
+  host: ${wfutur.protocol}
   port: 9000
   protocol: http
+
+# HTTP SESSION TIMEOUT
+server:
+  servlet:
+    session:
+      timeout: 2h
+
+# EUREKA
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${eureka.protocol}://${eureka.instance.hostname}:${eureka.server.port}/eureka/
+  protocol: http
+  instance:
+    hostname: localhost
+    health-check-url-path: /actuator/health
+    leaseRenewalIntervalInSeconds: 10
+  server:
+    port: 8761
+
+management:
+  endpoint:
+    logfile:
+      external-file: ${logging.file.name}
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 
 # KEYCLOAK
 oauth2:
   base:
-    url: http://${eureka.instance.hostname}:8080
+    url: http://localhost:8181
 
 keycloak:
   enabled: true
-  realm: WFuturRealm
+  realm: wfutur_realm
   resource: wfutur
   credentiels:
     secret: V4ACf3ONVXF4kUA22hHvCHo8fp9xDlx0
-  auth-server-url: ${oauth2.base.url}/auth
+  auth-server-url: ${oauth2.base.url}/realm
   always-refresh-token: true
   cors: true
   cors-max-age: 0
@@ -26,3 +67,59 @@ keycloak:
   cors-allowed-headers: '*'
   cors-exposed-headers: '*'
   principal-attribute: preferred_username
+
+  # HIBERNATE && OAUTH2
+  spring:
+    datasource:
+      username: postgres
+      url: jdbc:postgresql://localhost:5432/
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        idle-timeout: 10000
+        leak-detection-thleshold: 3000
+        max-lifetime: 30000
+        maximum-pool-size: 3
+        minimum-idle: 0
+        connection-timeout: 60000
+      password: 123456
+    jpa:
+      database: postgresql
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate:
+        ddl-auto: none
+
+
+    security:
+      oauth2:
+        client:
+          registration:
+            keycloak:
+              client-id:
+              client-secret:
+                scope: openid
+          provider:
+            keycloak:
+              issuer-uri: ${keycloak.auth-server-url}/realms/${keycloak.realm}
+              user-name-attribute: preferred_username
+        resourceserver:
+          jwt:
+            issuer-uri: ${keycloak.auth.server.url}/realms/${keycloak.realm}
+
+# LOGGING
+logging:
+  file:
+    name: //${user.home}./wfutur/3/logs/${spring.application.name}-logs.log
+  level:
+    root: INFO
+    com.axion.wfutur: ERROR
+    org.springframework: ERROR
+    org.hibernate: ERROR
+    org.flywaydb: ERROR
+    com.netflix: ERROR
+    org.apache: ERROR
+  logback:
+    rollingpolicy:
+      max-file-size: 1MB
+      max-history: 50
