@@ -106,7 +106,7 @@ keycloak:
         resourceserver:
           jwt:
             issuer-uri: ${oauth2.base.url}/realms/${keycloak.realm}
-            jwk-set-uri: ${oauth2.base.url}/realms/${keycloak.realm}/protocol/openid-connect/certs
+            jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 # LOGGING
 logging:
