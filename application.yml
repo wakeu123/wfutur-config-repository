@@ -57,7 +57,7 @@ keycloak:
   enabled: true
   realm: wfutur_realm
   resource: wfutur
-  credentiels:
+  credentials:
     secret: V4ACf3ONVXF4kUA22hHvCHo8fp9xDlx0
   auth-server-url: ${oauth2.base.url}/realm
   always-refresh-token: true
@@ -101,11 +101,11 @@ keycloak:
                 scope: openid
           provider:
             keycloak:
-              issuer-uri: ${keycloak.auth-server-url}/realms/${keycloak.realm}
+              issuer-uri: ${oauth2.base.url/realms/${keycloak.realm}
               user-name-attribute: preferred_username
         resourceserver:
           jwt:
-            issuer-uri: ${keycloak.auth.server.url}/realms/${keycloak.realm}
+            issuer-uri: ${oauth2.base.url}/realms/${keycloak.realm}
 
 # LOGGING
 logging:
