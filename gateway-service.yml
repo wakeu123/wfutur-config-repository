@@ -2,24 +2,9 @@
 application:
   author: Georges WAKEU
   title: Student service
-  version: 1.0.0
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka
-
-logging:
-  level:
-    com:
-      netflix: ERROR
-
+  version: ${version}
 
 spring:
-  application:
-    name: gateway-service
   cloud:
     gateway:
       discovery:
@@ -38,7 +23,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://${eureka.instance.hostname}:8080/realms/wfutur
+          issuer-uri: http://${AUTHENTICATION_RESOURCE_URL:localhost}:${AUTHENTICATION_RESOURCE_PORT:8080}/realms/wfutur
 
 
 server:

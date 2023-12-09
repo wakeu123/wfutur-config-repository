@@ -40,6 +40,8 @@ eureka:
 
 management:
   endpoint:
+    health:
+      show-details: always
     logfile:
       external-file: ${logging.file.name}
   endpoints:
@@ -70,6 +72,9 @@ keycloak:
 
   # HIBERNATE && OAUTH2
   spring:
+    cloud:
+      config:
+        enable: true
     datasource:
       username: postgres
       url: jdbc:postgresql://localhost:5432/

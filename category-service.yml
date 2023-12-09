@@ -2,25 +2,7 @@ application:
   author: Georges WAKEU
   demo: ${app.name.demo}
   title: Category service
-  version: 1.0.0
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-eureka:
-  client:
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka
-
-server:
-  port: 8010
+  version: ${version}
 
 spring:
   datasource:

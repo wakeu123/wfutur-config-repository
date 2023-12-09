@@ -3,34 +3,12 @@ application:
   author: Georges WAKEU
   demo: ${app.name.demo}
   title: Student service
-  version: 0.0.1
-
-logging:
-  level:
-    root: INFO
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-eureka:
-  client:
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka
-
-server:
-  port: 8090
+  version: ${version}
 
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5432/students
+    url: jdbc:postgresql://${DATABASE_URL:localhost}:${DATABASE_PORT:5432}/students
     username: keycloak
     password: keycloak
   jpa:

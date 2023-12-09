@@ -2,7 +2,7 @@ application:
   author: Georges WAKEU
   demo: ${app.name.demo}
   title: Administration service
-  version: 1.0.0
+  version: ${version}
 
 spring:
   boot:
