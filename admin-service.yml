@@ -2,10 +2,7 @@ application:
   author: Georges WAKEU
   demo: ${app.name.demo}
   title: Administration service
-  version: 0.0.1
-
-server:
-  port: 8020
+  version: 1.0.0
 
 spring:
   boot:
@@ -14,14 +11,4 @@ spring:
         converter:
           management-context-path: /actuator
 
-logging:
-  level:
-    com:
-      netflix: ERROR
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
 

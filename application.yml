@@ -32,11 +32,11 @@ eureka:
       defaultZone: ${eureka.protocol}://${eureka.instance.hostname}:${eureka.server.port}/eureka/
   protocol: http
   instance:
-    hostname: localhost
+    hostname: ${DISCOVERY_SERVER_URL:localhost}
     health-check-url-path: /actuator/health
     leaseRenewalIntervalInSeconds: 10
   server:
-    port: 8761
+    port: ${EUREKA_SERVER_PORT:8080}
 
 management:
   endpoint:
