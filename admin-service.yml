@@ -12,4 +12,4 @@ spring:
           management-context-path: /actuator
 
 server:
-  por: 8020
+  port: 8020
