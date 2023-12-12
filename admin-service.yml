@@ -11,4 +11,5 @@ spring:
         converter:
           management-context-path: /actuator
 
-
+server:
+  por: 8020
