@@ -32,10 +32,10 @@ eureka:
       defaultZone: ${DISCOVERY_SERVER_URL:http://localhost:8761/eureka}
   protocol: http
   instance:
-    hostname: localhost
     health-check-url-path: /actuator/health
     leaseRenewalIntervalInSeconds: 10
     prefer-ip-address: true
+    hostname: localhost
 
 management:
   endpoint:
@@ -70,47 +70,47 @@ keycloak:
   principal-attribute: preferred_username
 
   # HIBERNATE && OAUTH2
-  spring:
-    cloud:
-      config:
-        enable: true
-    datasource:
-      username: postgres
-      url: jdbc:postgresql://localhost:5432/
-      driver-class-name: org.postgresql.Driver
-      hikari:
-        idle-timeout: 10000
-        leak-detection-thleshold: 3000
-        max-lifetime: 30000
-        maximum-pool-size: 3
-        minimum-idle: 0
-        connection-timeout: 60000
-      password: 123456
-    jpa:
-      database: postgresql
-      properties:
-        hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
+spring:
+  cloud:
+    config:
+      enable: true
+    discovery:
+      enable: true
+  datasource:
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      idle-timeout: 10000
+      leak-detection-thleshold: 3000
+      max-lifetime: 30000
+      maximum-pool-size: 3
+      minimum-idle: 0
+      connection-timeout: 60000
+    password: 123456
+  jpa:
+    database: postgresql
+    properties:
       hibernate:
-        ddl-auto: none
-
-
-    security:
-      oauth2:
-        client:
-          registration:
-            keycloak:
-              client-id:
-              client-secret:
-                scope: openid
-          provider:
-            keycloak:
-              issuer-uri: ${oauth2.base.url/realms/${keycloak.realm}
-              user-name-attribute: preferred_username
-        resourceserver:
-          jwt:
-            issuer-uri: ${oauth2.base.url}/realms/${keycloak.realm}
-            jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id:
+            client-secret:
+              scope: openid
+        provider:
+          keycloak:
+            issuer-uri: ${oauth2.base.url/realms/${keycloak.realm}
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: ${oauth2.base.url}/realms/${keycloak.realm}
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
 
 # LOGGING
 logging:
